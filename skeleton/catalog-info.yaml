@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ componentName }}
+  description: ${{ componentDescription }}
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: service
+  owner: ${{ componentOwner}}
+  lifecycle: experimental

@@ -1,0 +1,164 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: quarkus-soap-service
+  title: Servicio SOAP en Quarkus (Contract First)
+  description: Crea un servicio SOAP usando Quarkus y quarkus-cxf a partir de un WSDL
+  tags:
+    - quarkus
+    - soap
+    - cxf
+    - wsdl
+spec:
+  owner: equipo-integracion
+  type: service
+  parameters:
+
+    - title: Configuración del servicio SOAP
+      required:
+        - serviceName
+        - servicePackage
+        - wsdlFile
+      properties:
+        serviceName:
+          title: Nombre del servicio
+          type: string
+          description: Nombre técnico del servicio (usado como nombre de carpeta)
+        servicePackage:
+          title: Paquete Java base
+          type: string
+          default: cl.ejemplo.soap.v1
+          description: Paquete base donde estaran las clases Java
+        wsdlFile:
+          title: Nombre del archivo WSDL
+          type: string
+          default: consulta.wsdl
+          description: El WSDL será ubicado en src/main/resources/wsdl/
+        xsdFiles:
+          title: Archivos XSD que importa el WSDL (opcional, separados por coma)
+          type: string
+          default: ConsultaRequest.xsd,ConsultaResponse.xsd
+        includeBinding:
+          title: ¿Incluir archivo binding.xml personalizado?
+          type: boolean
+          default: true
+
+    - title: Repositorio GitHub
+      required:
+        - githubOwner
+        - githubRepo
+      properties:
+        githubOwner:
+          title: Organización o usuario en GitHub
+          type: string
+          description: A qué organización o usuario se subirá el repositorio
+        githubRepo:
+          title: Nombre del repositorio a crear
+          type: string
+          description: Nombre que tendrá el nuevo repositorio
+        repoVisibility:
+          title: Visibilidad del repositorio
+          type: string
+          enum:
+            - public
+            - private
+          default: private
+
+    - title: Información del catálogo
+      required:
+        - componentName
+        - componentOwner
+      properties:
+        componentName:
+          title: Nombre del componente
+          type: string
+          description: Nombre visible en el catálogo (puede incluir espacios)
+        componentDescription:
+          title: Descripción
+          type: string
+          description: Descripción del componente en el catálogo
+        componentOwner:
+          title: Owner (responsable)
+          type: string
+          ui:field: OwnerPicker
+          ui:options:
+            catalogFilter:
+              kind: [User, Group]
+
+  steps:
+
+    - id: fetch-template
+      name: Crear estructura base
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          serviceName: ${{ parameters.serviceName }}
+          servicePackage: ${{ parameters.servicePackage }}
+
+    - id: crear-directorios-java
+      name: Crear carpetas del paquete Java
+      action: fs:mkdir
+      input:
+        path: ${{ parameters.serviceName }}/src/main/java/${{ parameters.servicePackage | replace('.', '/') }}
+
+    - id: write-wsdl
+      name: Copiar WSDL
+      action: fs:write
+      input:
+        files:
+          - path: ${{ parameters.serviceName }}/src/main/resources/wsdl/${{ parameters.wsdlFile }}
+            content: |
+              <!-- Aquí podrías incluir un WSDL base o dejarlo como archivo vacío para que el usuario lo complete -->
+
+    - id: write-xsds
+      name: Copiar archivos XSD (si aplica)
+      action: fs:write
+      input:
+        files:
+          - path: ${{ parameters.serviceName }}/src/main/resources/xsd/ConsultaRequest.xsd
+            content: |
+              <!-- Placeholder del XSD -->
+          - path: ${{ parameters.serviceName }}/src/main/resources/xsd/ConsultaResponse.xsd
+            content: |
+              <!-- Placeholder del XSD -->
+
+    - id: write-binding
+      name: Agregar archivo binding.xml (opcional)
+      if: ${{ parameters.includeBinding }}
+      action: fs:write
+      input:
+        files:
+          - path: ${{ parameters.serviceName }}/src/main/resources/wsdl/binding.xml
+            content: |
+              <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
+                              xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+                              jaxws:version="2.0">
+                <jaxws:bindings>
+                  <jaxb:globalBindings>
+                    <jaxb:serializable uid="1" />
+                  </jaxb:globalBindings>
+                </jaxws:bindings>
+              </jaxws:bindings>
+
+    - id: publish
+      name: Crear y subir repositorio en GitHub
+      action: publish:github
+      input:
+        repoUrl: github.com/${{ parameters.githubOwner }}/${{ parameters.githubRepo }}
+        defaultBranch: main
+        protectDefaultBranch: false
+        repoVisibility: ${{ parameters.repoVisibility }}
+
+    - id: register
+      name: Registrar en catálogo de Backstage
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+        catalogInfoPath: /catalog-info.yaml
+
+  output:
+  links:
+    - title: Repositorio del servicio
+      url: https://github.com/${{ parameters.githubOwner }}/${{ parameters.githubRepo }}
+
