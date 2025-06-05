@@ -101,7 +101,7 @@ spec:
 
     - id: crear-directorios-java
       name: Crear carpetas del paquete Java
-      action: fs:mkdir
+      action: my:mkdir
       input:
         path: ${{ parameters.serviceName }}/src/main/java/${{ parameters.servicePackage | replace('.', '/') }}
 
