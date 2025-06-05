@@ -161,7 +161,7 @@ spec:
         catalogInfoPath: '/catalog-info.yaml'
 
   output:
-  links:
-    - title: Repositorio del servicio
-      url: https://github.com/${{ parameters.githubOwner }}/${{ parameters.githubRepo }}
+    links:
+      - title: Repositorio del servicio
+        url: https://github.com/${{ parameters.githubOwner }}/${{ parameters.githubRepo }}
 
