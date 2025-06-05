@@ -7,5 +7,5 @@ metadata:
     backstage.io/techdocs-ref: dir:.
 spec:
   type: service
-  owner: ${{ componentOwner}}
+  owner: ${{ componentOwner }}
   lifecycle: experimental

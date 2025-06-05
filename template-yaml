@@ -95,6 +95,9 @@ spec:
         values:
           serviceName: ${{ parameters.serviceName }}
           servicePackage: ${{ parameters.servicePackage }}
+          componentName: ${{ parameters.componentName }}
+          componentDescription: ${{ parameters.componentDescription }}
+          componentOwner: ${{ parameters.componentOwner }}
 
     - id: crear-directorios-java
       name: Crear carpetas del paquete Java
