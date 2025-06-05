@@ -1,7 +1,7 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: quarkus-soap-service
+  name: quarkus-soap-service-2
   title: Servicio SOAP en Quarkus (Contract First)
   description: Crea un servicio SOAP usando Quarkus y quarkus-cxf a partir de un WSDL
   tags:
