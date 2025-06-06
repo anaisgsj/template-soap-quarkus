@@ -97,9 +97,14 @@ spec:
 
     - id: crear-directorios-java
       name: Crear carpetas del paquete Java
-      action: my:mkdir
+      action: my:write
       input:
-        path: src/main/java/${{ parameters.servicePackage | replace(".", "/") }}
+        files:
+          - path: src/main/java/${{ parameters.servicePackage | replace(".", "/") }}/ServicioBase.java
+            content: |
+              public class ServicioBase {
+              // Clase generada automáticamente por el template
+              }
 
     - id: write-wsdl
       name: Copiar WSDL
