@@ -122,13 +122,13 @@ spec:
       if: ${{ parameters.xsdFileContent }}
       action: my:write
       input:
-        files: ${{ parameters.xsdFileContent 
-          | zip(parameters.xsdFiles | split(",")) 
-          | map(file => {
-              path: "src/main/resources/xsd/" + (file[1] | trim),
-              encoding: "base64",
-              content: file[0] | parseBase64
-            }) }}
+        files:
+          - path: src/main/resources/xsd/${{ parameters.xsdFiles | split(",") | at(0) | trim }}
+            encoding: base64
+            content: ${{ parameters.xsdFileContent | at(0) | parseBase64 }}
+          - path: src/main/resources/xsd/${{ parameters.xsdFiles | split(",") | at(1) | trim }}
+            encoding: base64
+            content: ${{ parameters.xsdFileContent | at(1) | parseBase64 }}
 
     - id: generar-clases-jaxb
       name: Generar clases JAXB desde WSDL
