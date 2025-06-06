@@ -110,18 +110,20 @@ spec:
       name: Copiar WSDL
       action: my:write
       input:
-        path: src/main/resources/wsdl/${{ parameters.wsdlFile }}
-        encoding: base64
-        content: ${{ parameters.wsdlFileContent | parseBase64 }}
+        files:
+          - path: src/main/resources/wsdl/${{ parameters.wsdlFile }}
+            encoding: base64
+            content: ${{ parameters.wsdlFileContent | parseBase64 }}
 
     - id: write-xsd
       name: Copiar XSD (si fue cargado)
       if: ${{ parameters.xsdFileContent }}
       action: my:write
       input:
-        path: src/main/resources/xsd/ConsultaRequest.xsd
-        encoding: base64
-        content: ${{ parameters.xsdFileContent | parseBase64 }}
+        files:
+          - path: src/main/resources/xsd/ConsultaRequest.xsd
+            encoding: base64
+            content: ${{ parameters.xsdFileContent | parseBase64 }}
 
     - id: generar-clases-jaxb
       name: Generar clases JAXB desde WSDL
