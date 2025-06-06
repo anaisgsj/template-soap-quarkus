@@ -2,30 +2,30 @@
 
 Este proyecto implementa un servicio SOAP en Quarkus utilizando un enfoque **Contract First**, donde el contrato (`WSDL`) define la interfaz del servicio y las clases Java se generan automáticamente a partir de este.
 
+Para mas informacion consulta: (https://docs.quarkiverse.io/quarkus-cxf/dev/user-guide/contract-first-code-first/generate-java-from-wsdl.html#).
+
 ---
 
 ## Descripción
 
-Este servicio expone una operación SOAP definida en el archivo WSDL:
+Este servicio expone una operación SOAP definida en el archivo WSDL ubicado en:
 
+    src/main/resources/wsdl/achivo.wsdl
 
-`{{ wsdlFile }}`
+y utiliza los esquemas XML ubicados en:
 
-y utiliza los siguientes esquemas XML:
-
-`{{ xsdFiles }}`
-
+    src/main/resources/xsd/archivo.xsd
 
 ---
 
 ## Estructura del Proyecto
 
 ```plaintext
-servicio-soap-v5/
+nombre del servicio/
 ├── src/
 │   └── main/
 │       ├── java/
-│       │   └── {{ servicePackage | replace('.', '/') }}/
+│       │   └── package/
 │       │       └── service/       # Implementaciones SOAP
 │       └── resources/
 │           ├── wsdl/              # WSDL y binding.xml (opcional)
@@ -35,7 +35,6 @@ servicio-soap-v5/
 └── docs/
     └── index.md                   # Este archivo de documentación
 ```
-
 ---
 
 ## Dependencias clave
