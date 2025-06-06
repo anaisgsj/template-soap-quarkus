@@ -52,10 +52,6 @@ spec:
           title: Organización o usuario en GitHub
           type: string
           description: A qué organización o usuario se subirá el repositorio
-        githubRepo:
-          title: Nombre del repositorio a crear
-          type: string
-          description: Nombre que tendrá el nuevo repositorio
         repoVisibility:
           title: Visibilidad del repositorio
           type: string
@@ -104,7 +100,7 @@ spec:
       name: Crear carpetas del paquete Java
       action: my:mkdir
       input:
-        path: src/main/java/${{ parameters.servicePackage | replace('.', '/') }}
+        path: src/main/java/${{ parameters.servicePackage | replace(".", "/") }}
 
     - id: write-wsdl
       name: Copiar WSDL
@@ -164,5 +160,5 @@ spec:
   output:
     links:
       - title: Repositorio del servicio
-        url: https://github.com/${{ parameters.githubOwner }}/${{ parameters.githubRepo }}
+        url: https://github.com/${{ parameters.githubOwner }}/${{ parameters.serviceName }}
 
