@@ -5,7 +5,14 @@ metadata:
   description: ${{ values.componentDescription }}
   annotations:
     backstage.io/techdocs-ref: dir:.
+  tags:
+    - quarkus
+    - soap
+    - cxf
+    - wsdl
+    
 spec:
   type: service
   owner: ${{ values.componentOwner }}
   lifecycle: experimental
+  system: sistema-infracciones

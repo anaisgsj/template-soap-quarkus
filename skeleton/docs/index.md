@@ -35,6 +35,7 @@ nombre del servicio/
 └── docs/
     └── index.md                   # Este archivo de documentación
 ```
+
 ---
 
 ## Dependencias clave
