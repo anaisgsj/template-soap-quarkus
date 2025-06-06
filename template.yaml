@@ -107,7 +107,7 @@ spec:
 
     - id: write-wsdl
       name: Copiar WSDL
-      action: fs:write
+      action: my:write
       input:
         files:
           - path: ${{ parameters.serviceName }}/src/main/resources/wsdl/${{ parameters.wsdlFile }}
