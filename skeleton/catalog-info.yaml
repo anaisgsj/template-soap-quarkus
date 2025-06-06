@@ -1,11 +1,11 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: ${{ componentName }}
-  description: ${{ componentDescription }}
+  name: ${{ valus.componentName }}
+  description: ${{ values.componentDescription }}
   annotations:
     backstage.io/techdocs-ref: dir:.
 spec:
   type: service
-  owner: ${{ componentOwner }}
+  owner: ${{ values.componentOwner }}
   lifecycle: experimental
