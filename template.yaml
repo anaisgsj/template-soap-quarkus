@@ -46,7 +46,6 @@ spec:
     - title: Repositorio GitHub
       required:
         - githubOwner
-        - githubRepo
       properties:
         githubOwner:
           title: Organización o usuario en GitHub
