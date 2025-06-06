@@ -115,7 +115,7 @@ spec:
 
     - id: write-xsds
       name: Copiar archivos XSD (si aplica)
-      action: fs:write
+      action: my:write
       input:
         files:
           - path: ${{ parameters.serviceName }}/src/main/resources/xsd/ConsultaRequest.xsd
@@ -128,11 +128,10 @@ spec:
     - id: write-binding
       name: Agregar archivo binding.xml (opcional)
       if: ${{ parameters.includeBinding }}
-      action: fs:write
+      action: my:write
       input:
-        files:
-          - path: ${{ parameters.serviceName }}/src/main/resources/wsdl/binding.xml
-            content: |
+        path: ${{ parameters.serviceName }}/src/main/resources/wsdl/binding.xml
+        content: |
               <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
                               xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
                               jaxws:version="2.0">
