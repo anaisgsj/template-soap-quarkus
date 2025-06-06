@@ -109,9 +109,8 @@ spec:
       name: Copiar WSDL
       action: my:write
       input:
-        files:
-          - path: ${{ parameters.serviceName }}/src/main/resources/wsdl/${{ parameters.wsdlFile }}
-            content: |
+        path: ${{ parameters.serviceName }}/src/main/resources/wsdl/${{ parameters.wsdlFile }}
+        content: |
               <!-- Aquí podrías incluir un WSDL base o dejarlo como archivo vacío para que el usuario lo complete -->
 
     - id: write-xsds
