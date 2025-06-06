@@ -131,8 +131,9 @@ spec:
       if: ${{ parameters.includeBinding }}
       action: my:write
       input:
-        path: ${{ parameters.serviceName }}/src/main/resources/wsdl/binding.xml
-        content: |
+        files:
+          - path: ${{ parameters.serviceName }}/src/main/resources/wsdl/binding.xml
+            content: |
               <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
                               xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
                               jaxws:version="2.0">
@@ -147,7 +148,7 @@ spec:
       name: Crear y subir repositorio en GitHub
       action: publish:github
       input:
-        repoUrl: github.com/${{ parameters.githubOwner }}/${{ parameters.githubRepo }}
+        repoUrl: github.com?owner=${{ parameters.githubOwner }}&repo=${{ parameters.githubRepo }}
         defaultBranch: main
         protectDefaultBranch: false
         repoVisibility: ${{ parameters.repoVisibility }}
