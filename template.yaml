@@ -46,9 +46,11 @@ spec:
           default: ConsultaRequest.xsd,ConsultaResponse.xsd
         xsdFileContent:
           title: Archivo XSD (opcional)
-          type: string
-          format: data-url
-          ui:widget: file
+          type: array
+          items:
+            type: string
+            format: data-url
+          ui:widget: files
         includeBinding:
           title: ¿Incluir archivo binding.xml personalizado?
           type: boolean
@@ -120,17 +122,19 @@ spec:
       if: ${{ parameters.xsdFileContent }}
       action: my:write
       input:
-        files:
-          - path: src/main/resources/xsd/ConsultaRequest.xsd
-            encoding: base64
-            content: ${{ parameters.xsdFileContent | parseBase64 }}
+        files: ${{ parameters.xsdFileContent 
+          | zip(parameters.xsdFiles | split(",")) 
+          | map(file => {
+              path: "src/main/resources/xsd/" + (file[1] | trim),
+              encoding: "base64",
+              content: file[0] | parseBase64
+            }) }}
 
     - id: generar-clases-jaxb
       name: Generar clases JAXB desde WSDL
-      action: shell:script
+      action: my:generate-jaxb-classes
       input:
-        script: |
-          ./mvnw clean generate-sources
+        {}
 
     - id: copiar-clases
       name: Copiar clases JAXB al paquete Java
