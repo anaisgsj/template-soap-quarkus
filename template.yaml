@@ -144,7 +144,7 @@ spec:
       name: Crear y subir repositorio en GitHub
       action: publish:github
       input:
-        repoUrl: github.com?owner=${{ parameters.githubOwner }}&repo=${{ parameters.githubRepo }}
+        repoUrl: github.com?owner=${{ parameters.githubOwner }}&repo=${{ parameters.serviceName }}
         defaultBranch: main
         protectDefaultBranch: false
         repoVisibility: ${{ parameters.repoVisibility }}
