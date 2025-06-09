@@ -143,13 +143,11 @@ spec:
       input:
         {}
 
-    - id: copiar-clases
+    - id: copy-jaxb-classes
       name: Copiar clases JAXB al paquete Java
-      action: shell:script
+      action: my:copy-jaxb-classes
       input:
-        script: |
-          mkdir -p src/main/java/${{ parameters.servicePackage | replace(".", "/") }}
-          cp -r target/generated-sources/jaxws/* src/main/java/${{ parameters.servicePackage | replace(".", "/") }}/
+        servicePackage: ${{ parameters.servicePackage }}
 
     - id: crear-directorios-java
       name: Crear carpetas del paquete Java
