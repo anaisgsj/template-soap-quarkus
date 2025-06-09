@@ -160,7 +160,6 @@ spec:
       input:
         servicePackage: ${{ parameters.servicePackage }}/wsdl2java
 
-
     - id: write-binding
       name: Agregar archivo binding.xml (opcional)
       if: ${{ parameters.includeBinding }}
