@@ -40,17 +40,24 @@ spec:
           type: string
           format: data-url
           ui:widget: file
-        xsdFiles:
-          title: Archivos XSD que importa el WSDL (opcional, separados por coma)
+        xsdFileName1:
+        type: string
+        title: Nombre del primer XSD
+        default: ConsultaRequest.xsd
+        xsdFileContent1:
           type: string
-          default: ConsultaRequest.xsd,ConsultaResponse.xsd
-        xsdFileContent:
-          title: Archivo XSD (opcional)
-          type: array
-          items:
-            type: string
-            format: data-url
-          ui:widget: files
+          format: data-url
+          title: Archivo XSD 1
+          ui:widget: file
+        xsdFileName2:
+          type: string
+          title: Nombre del segundo XSD
+          default: ConsultaResponse.xsd
+        xsdFileContent2:
+          type: string
+          format: data-url
+          title: Archivo XSD 2
+          ui:widget: file
         includeBinding:
           title: ¿Incluir archivo binding.xml personalizado?
           type: boolean
@@ -123,12 +130,12 @@ spec:
       action: my:write
       input:
         files:
-          - path: src/main/resources/xsd/${{ parameters.xsdFiles | split(",") | at(0) | trim }}
-            encoding: base64
-            content: ${{ parameters.xsdFileContent | at(0) | parseBase64 }}
-          - path: src/main/resources/xsd/${{ parameters.xsdFiles | split(",") | at(1) | trim }}
-            encoding: base64
-            content: ${{ parameters.xsdFileContent | at(1) | parseBase64 }}
+        - path: src/main/resources/xsd/${{ parameters.xsdFileName1 }}
+          content: ${{ parameters.xsdFileContent1 }}
+          encoding: base64
+        - path: src/main/resources/xsd/${{ parameters.xsdFileName2 }}
+          content: ${{ parameters.xsdFileContent2 }}
+          encoding: base64
     
     - id: generar-clases-jaxb
       name: Generar clases JAXB desde WSDL
