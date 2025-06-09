@@ -41,9 +41,9 @@ spec:
           format: data-url
           ui:widget: file
         xsdFileName1:
-        type: string
-        title: Nombre del primer XSD
-        default: ConsultaRequest.xsd
+          type: string
+          title: Nombre del primer XSD
+          default: ConsultaRequest.xsd
         xsdFileContent1:
           type: string
           format: data-url
