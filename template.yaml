@@ -148,7 +148,7 @@ spec:
       action: my:write
       input:
         files:
-          - path: src/main/java/${{ parameters.servicePackage | replace(".", "/") }}/ServicioBase.java
+          - path: src/main/java/${{ parameters.servicePackage | replace(".", "/") }}/servicio/ServicioBase.java
             content: |
               public class ServicioBase {
               // Clase generada automáticamente por el template
@@ -158,7 +158,7 @@ spec:
       name: Copiar clases JAXB al paquete Java
       action: my:copy-jaxb-classes
       input:
-        servicePackage: ${{ parameters.servicePackage }}
+        servicePackage: /wsdl2java/${{ parameters.servicePackage }}
 
 
     - id: write-binding
