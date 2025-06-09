@@ -136,7 +136,16 @@ spec:
         - path: src/main/resources/xsd/${{ parameters.xsdFileName2 }}
           content: ${{ parameters.xsdFileContent2 }}
           encoding: base64
-    
+
+    - id: log-xsd-paths
+      name: Verificar ubicación de archivos
+      action: log:info
+      input:
+        message: |
+          Archivos copiados:
+          - src/main/resources/xsd/${{ parameters.xsdFile1Name }}
+          - src/main/resources/xsd/${{ parameters.xsdFile2Name }}
+
     - id: generar-clases-jaxb
       name: Generar clases JAXB desde WSDL
       action: my:generate-jaxb-classes
