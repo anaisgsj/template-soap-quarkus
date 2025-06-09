@@ -143,12 +143,6 @@ spec:
       input:
         {}
 
-    - id: copy-jaxb-classes
-      name: Copiar clases JAXB al paquete Java
-      action: my:copy-jaxb-classes
-      input:
-        servicePackage: ${{ parameters.servicePackage }}
-
     - id: crear-directorios-java
       name: Crear carpetas del paquete Java
       action: my:write
@@ -159,6 +153,13 @@ spec:
               public class ServicioBase {
               // Clase generada automáticamente por el template
               }
+
+    - id: copy-jaxb-classes
+      name: Copiar clases JAXB al paquete Java
+      action: my:copy-jaxb-classes
+      input:
+        servicePackage: ${{ parameters.servicePackage }}
+
 
     - id: write-binding
       name: Agregar archivo binding.xml (opcional)
