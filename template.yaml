@@ -126,7 +126,7 @@ spec:
 
     - id: write-xsd
       name: Copiar XSD (si fue cargado)
-      if: ${{ parameters.xsdFileContent }}
+      if: ${{ parameters.xsdFile1Content && parameters.xsdFile2Content }}
       action: my:write
       input:
         files:
