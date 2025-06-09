@@ -114,8 +114,9 @@ spec:
       input:
         files:
           - path: src/main/resources/wsdl/${{ parameters.wsdlFile }}
+            content: ${{ parameters.wsdlFileContent }}
             encoding: base64
-            content: ${{ parameters.wsdlFileContent | parseBase64 }}
+
 
     - id: write-xsd
       name: Copiar XSD (si fue cargado)
