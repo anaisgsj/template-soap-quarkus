@@ -125,13 +125,11 @@ spec:
       input:
         files:
           - path: src/main/resources/xsd/${{ parameters.xsdFiles | split(",") | at(0) | trim }}
-            content: ${{ parameters.xsdFileContent }}
             encoding: base64
-            
+            content: ${{ parameters.xsdFileContent | at(0) | parseBase64 }}
           - path: src/main/resources/xsd/${{ parameters.xsdFiles | split(",") | at(1) | trim }}
-            content: ${{ parameters.xsdFileContent }}
             encoding: base64
-
+            content: ${{ parameters.xsdFileContent | at(1) | parseBase64 }}
 
     - id: generar-clases-jaxb
       name: Generar clases JAXB desde WSDL
