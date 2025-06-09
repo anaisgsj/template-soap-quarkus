@@ -142,6 +142,15 @@ spec:
           - path: src/main/resources/xsd/ConsultaRequest.xsd
             content: ${{ parameters.xsdFileContent | at(1) | parseBase64 }}
             encoding: base64
+    
+    - id: log-xsd-files
+      name: Verificar contenido de los XSD
+      action: my:write
+      input:
+        logs:
+          - message: "Contenido de ConsultaResponse.xsd: ${{ parameters.xsdFileContent | at(0) }}"
+          - message: "Contenido de ConsultaRequest.xsd: ${{ parameters.xsdFileContent | at(1) }}"
+
 
     - id: generar-clases-jaxb
       name: Generar clases JAXB desde WSDL
