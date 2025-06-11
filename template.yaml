@@ -58,6 +58,10 @@ spec:
           format: data-url
           title: Archivo XSD 2
           ui:widget: file
+        includeBinding:
+          title: ¿Incluir archivo binding.xml personalizado?
+          type: boolean
+          default: true
 
     - title: Repositorio GitHub
       required:
@@ -156,6 +160,23 @@ spec:
       input:
         servicePackage: ${{ parameters.servicePackage }}/wsdl2java
 
+    - id: write-binding
+      name: Agregar archivo binding.xml (opcional)
+      if: ${{ parameters.includeBinding }}
+      action: my:write
+      input:
+        files:
+          - path: src/main/resources/wsdl/binding.xml
+            content: |
+              <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
+                              xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+                              jaxws:version="2.0">
+                <jaxws:bindings>
+                  <jaxb:globalBindings>
+                    <jaxb:serializable uid="1" />
+                  </jaxb:globalBindings>
+                </jaxws:bindings>
+              </jaxws:bindings>
 
     - id: publish
       name: Crear y subir repositorio en GitHub
